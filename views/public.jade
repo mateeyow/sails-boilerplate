@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title Sails Boilerplate
+    // Viewport mobile tag for sensible mobile support
+    meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+
+    // STYLES
+    link(rel="stylesheet", href="/styles/home.css")
+    // STYLES END
+
+  body
+    p Hello
+    ng-view
+
+    // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
+    // SCRIPTS
+    script(src="/js/jst.js")
+    script(src="/js/public/home.js")
+    // SCRIPTS END
+
