@@ -15,7 +15,7 @@
 module.exports = function(grunt) {
 
 	var templateFilesToInject = [
-		'templates/**/*.html'
+		'assets/templates/**/*.html'
 	];
 
 	grunt.config.set('jst', {
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
 			files: {
 				// e.g.
 				// 'relative/path/from/gruntfile/to/compiled/template/destination'  : ['relative/path/to/sourcefiles/**/*.html']
-				'.tmp/public/jst.js': require('../pipeline').templateFilesToInject
+				'.tmp/public/js/jst.js': require('../pipeline').templateFilesToInject
 			}
 		}
 	});
