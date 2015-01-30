@@ -13,255 +13,128 @@
  */
 module.exports = function(grunt) {
 
-	grunt.config.set('sails-linker', {
-		devJs: {
-			options: {
-				startTag: '<!--SCRIPTS-->',
-				endTag: '<!--SCRIPTS END-->',
-				fileTmpl: '<script src="%s"></script>',
-				appRoot: '.tmp/public'
-			},
-			files: {
-				'.tmp/public/**/*.html': require('../pipeline').jsFilesToInject,
-				'views/**/*.html': require('../pipeline').jsFilesToInject,
-				'views/**/*.ejs': require('../pipeline').jsFilesToInject
-			}
+	var users = require('../pipeline')
+		, linker = {};
+
+	linker.devJsJade = {
+		options: {
+			startTag: '// SCRIPTS',
+			endTag: '// SCRIPTS END',
+			fileTmpl: 'script(src="%s")',
+			appRoot: '.tmp/public'
 		},
+		files: {}
+	};
 
-		devJsRelative: {
-			options: {
-				startTag: '<!--SCRIPTS-->',
-				endTag: '<!--SCRIPTS END-->',
-				fileTmpl: '<script src="%s"></script>',
-				appRoot: '.tmp/public',
-				relative: true
-			},
-			files: {
-				'.tmp/public/**/*.html': require('../pipeline').jsFilesToInject,
-				'views/**/*.html': require('../pipeline').jsFilesToInject,
-				'views/**/*.ejs': require('../pipeline').jsFilesToInject
-			}
+	linker.devJsRelativeJade = {
+		options: {
+			startTag: '// SCRIPTS',
+			endTag: '// SCRIPTS END',
+			fileTmpl: 'script(src="%s")',
+			appRoot: '.tmp/public',
+			relative: true
 		},
+		files: {}
+	};
 
-		prodJs: {
-			options: {
-				startTag: '<!--SCRIPTS-->',
-				endTag: '<!--SCRIPTS END-->',
-				fileTmpl: '<script src="%s"></script>',
-				appRoot: '.tmp/public'
-			},
-			files: {
-				'.tmp/public/**/*.html': ['.tmp/public/min/production.min.js'],
-				'views/**/*.html': ['.tmp/public/min/production.min.js'],
-				'views/**/*.ejs': ['.tmp/public/min/production.min.js']
-			}
+	linker.prodJsJade = {
+		options: {
+			startTag: '// SCRIPTS',
+			endTag: '// SCRIPTS END',
+			fileTmpl: 'script(src="%s")',
+			appRoot: '.tmp/public'
 		},
+		files: {}
+	};
 
-		prodJsRelative: {
-			options: {
-				startTag: '<!--SCRIPTS-->',
-				endTag: '<!--SCRIPTS END-->',
-				fileTmpl: '<script src="%s"></script>',
-				appRoot: '.tmp/public',
-				relative: true
-			},
-			files: {
-				'.tmp/public/**/*.html': ['.tmp/public/min/production.min.js'],
-				'views/**/*.html': ['.tmp/public/min/production.min.js'],
-				'views/**/*.ejs': ['.tmp/public/min/production.min.js']
-			}
+	linker.prodJsRelativeJade = {
+		options: {
+			startTag: '// SCRIPTS',
+			endTag: '// SCRIPTS END',
+			fileTmpl: 'script(src="%s")',
+			appRoot: '.tmp/public',
+			relative: true
 		},
+		files: {}
+	};
 
-		devStyles: {
-			options: {
-				startTag: '<!--STYLES-->',
-				endTag: '<!--STYLES END-->',
-				fileTmpl: '<link rel="stylesheet" href="%s">',
-				appRoot: '.tmp/public'
-			},
-
-			files: {
-				'.tmp/public/**/*.html': require('../pipeline').cssFilesToInject,
-				'views/**/*.html': require('../pipeline').cssFilesToInject,
-				'views/**/*.ejs': require('../pipeline').cssFilesToInject
-			}
+	linker.devStylesJade = {
+		options: {
+			startTag: '// STYLES',
+			endTag: '// STYLES END',
+			fileTmpl: 'link(rel="stylesheet", href="%s")',
+			appRoot: '.tmp/public'
 		},
+		files: {}
+	};
 
-		devStylesRelative: {
-			options: {
-				startTag: '<!--STYLES-->',
-				endTag: '<!--STYLES END-->',
-				fileTmpl: '<link rel="stylesheet" href="%s">',
-				appRoot: '.tmp/public',
-				relative: true
-			},
-
-			files: {
-				'.tmp/public/**/*.html': require('../pipeline').cssFilesToInject,
-				'views/**/*.html': require('../pipeline').cssFilesToInject,
-				'views/**/*.ejs': require('../pipeline').cssFilesToInject
-			}
+	linker.devStylesRelativeJade = {
+		options: {
+			startTag: '// STYLES',
+			endTag: '// STYLES END',
+			fileTmpl: 'link(rel="stylesheet", href="%s")',
+			appRoot: '.tmp/public',
+			relative: true
 		},
+		files: {}
+	};
 
-		prodStyles: {
-			options: {
-				startTag: '<!--STYLES-->',
-				endTag: '<!--STYLES END-->',
-				fileTmpl: '<link rel="stylesheet" href="%s">',
-				appRoot: '.tmp/public'
-			},
-			files: {
-				'.tmp/public/index.html': ['.tmp/public/min/production.min.css'],
-				'views/**/*.html': ['.tmp/public/min/production.min.css'],
-				'views/**/*.ejs': ['.tmp/public/min/production.min.css']
-			}
+	linker.prodStylesJade = {
+		options: {
+			startTag: '// STYLES',
+			endTag: '// STYLES END',
+			fileTmpl: 'link(rel="stylesheet", href="%s")',
+			appRoot: '.tmp/public'
 		},
+		files: {}
+	};
 
-		prodStylesRelative: {
-			options: {
-				startTag: '<!--STYLES-->',
-				endTag: '<!--STYLES END-->',
-				fileTmpl: '<link rel="stylesheet" href="%s">',
-				appRoot: '.tmp/public',
-				relative: true
-			},
-			files: {
-				'.tmp/public/index.html': ['.tmp/public/min/production.min.css'],
-				'views/**/*.html': ['.tmp/public/min/production.min.css'],
-				'views/**/*.ejs': ['.tmp/public/min/production.min.css']
-			}
+	linker.prodStylesRelativeJade = {
+		options: {
+			startTag: '// STYLES',
+			endTag: '// STYLES END',
+			fileTmpl: 'link(rel="stylesheet", href="%s")',
+			appRoot: '.tmp/public',
+			relative: true
 		},
+		files: {}
+	};
 
-		// Bring in JST template object
-		devTpl: {
-			options: {
-				startTag: '<!--TEMPLATES-->',
-				endTag: '<!--TEMPLATES END-->',
-				fileTmpl: '<script type="text/javascript" src="%s"></script>',
-				appRoot: '.tmp/public'
-			},
-			files: {
-				'.tmp/public/index.html': ['.tmp/public/jst.js'],
-				'views/**/*.html': ['.tmp/public/jst.js'],
-				'views/**/*.ejs': ['.tmp/public/jst.js']
-			}
-		},
+	// Bring in JST template object
+	// linker.devTplJade = {
+	// 	options: {
+	// 		startTag: '// TEMPLATES',
+	// 		endTag: '// TEMPLATES END',
+	// 		fileTmpl: 'script(type="text/javascript", src="%s")',
+	// 		appRoot: '.tmp/public'
+	// 	},
+	// 	files: {}
+	// };
 
-		devJsJade: {
-			options: {
-				startTag: '// SCRIPTS',
-				endTag: '// SCRIPTS END',
-				fileTmpl: 'script(src="%s")',
-				appRoot: '.tmp/public'
-			},
-			files: {
-				'views/**/*.jade': require('../pipeline').jsFilesToInject
-			}
-		},
-
-		devJsRelativeJade: {
-			options: {
-				startTag: '// SCRIPTS',
-				endTag: '// SCRIPTS END',
-				fileTmpl: 'script(src="%s")',
-				appRoot: '.tmp/public',
-				relative: true
-			},
-			files: {
-				'views/**/*.jade': require('../pipeline').jsFilesToInject
-			}
-		},
-
-		prodJsJade: {
-			options: {
-				startTag: '// SCRIPTS',
-				endTag: '// SCRIPTS END',
-				fileTmpl: 'script(src="%s")',
-				appRoot: '.tmp/public'
-			},
-			files: {
-				'views/**/*.jade': ['.tmp/public/min/production.min.js']
-			}
-		},
-
-		prodJsRelativeJade: {
-			options: {
-				startTag: '// SCRIPTS',
-				endTag: '// SCRIPTS END',
-				fileTmpl: 'script(src="%s")',
-				appRoot: '.tmp/public',
-				relative: true
-			},
-			files: {
-				'views/**/*.jade': ['.tmp/public/min/production.min.js']
-			}
-		},
-
-		devStylesJade: {
-			options: {
-				startTag: '// STYLES',
-				endTag: '// STYLES END',
-				fileTmpl: 'link(rel="stylesheet", href="%s")',
-				appRoot: '.tmp/public'
-			},
-
-			files: {
-				'views/**/*.jade': require('../pipeline').cssFilesToInject
-			}
-		},
-
-		devStylesRelativeJade: {
-			options: {
-				startTag: '// STYLES',
-				endTag: '// STYLES END',
-				fileTmpl: 'link(rel="stylesheet", href="%s")',
-				appRoot: '.tmp/public',
-				relative: true
-			},
-
-			files: {
-				'views/**/*.jade': require('../pipeline').cssFilesToInject
-			}
-		},
-
-		prodStylesJade: {
-			options: {
-				startTag: '// STYLES',
-				endTag: '// STYLES END',
-				fileTmpl: 'link(rel="stylesheet", href="%s")',
-				appRoot: '.tmp/public'
-			},
-			files: {
-				'views/**/*.jade': ['.tmp/public/min/production.min.css']
-			}
-		},
-
-		prodStylesRelativeJade: {
-			options: {
-				startTag: '// STYLES',
-				endTag: '// STYLES END',
-				fileTmpl: 'link(rel="stylesheet", href="%s")',
-				appRoot: '.tmp/public',
-				relative: true
-			},
-			files: {
-				'views/**/*.jade': ['.tmp/public/min/production.min.css']
-			}
-		},
-
-		// Bring in JST template object
-		devTplJade: {
-			options: {
-				startTag: '// TEMPLATES',
-				endTag: '// TEMPLATES END',
-				fileTmpl: 'script(type="text/javascript", src="%s")',
-				appRoot: '.tmp/public'
-			},
-			files: {
-				'views/**/*.jade': ['.tmp/public/jst.js']
+	for (var key in users) {
+		var jade = 'views/' + key + '.jade'
+		for (var link in linker) {
+			if (link.indexOf('prod') > -1) {
+				if (link.indexOf('Js') > -1) {
+					var dir = ['.tmp/public/min/' + key + '.min.js']
+					linker[link].files[jade] = dir
+				} else {
+					var dir = ['.tmp/public/min/' + key + '.min.css']
+					linker[link].files[jade] = dir
+				}
+			} else {
+				if (link.indexOf('Js') > -1) {
+					var dir = users[key].js
+					linker[link].files[jade] = dir
+				} else {
+					var dir = users[key].css
+					linker[link].files[jade] = dir
+				}
 			}
 		}
-	});
+	};
+
+	grunt.config.set('sails-linker', linker);
 
 	grunt.loadNpmTasks('grunt-sails-linker');
 };

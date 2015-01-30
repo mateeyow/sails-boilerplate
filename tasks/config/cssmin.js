@@ -10,12 +10,19 @@
  */
 module.exports = function(grunt) {
 
-	grunt.config.set('cssmin', {
-		dist: {
-			src: ['.tmp/public/concat/production.css'],
-			dest: '.tmp/public/min/production.min.css'
-		}
-	});
+  var users = require('../pipeline')
+    , cssmin = {};
+
+  for (var key in users) {
+    var css = 'css'+key;
+
+    cssmin[css] = {
+      src: ['.tmp/public/concat/' + key + '.css'],
+      dest: '.tmp/public/min/' + key + '.min.css'
+    }
+  };
+
+  grunt.config.set('cssmin', cssmin);
 
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 };

@@ -11,12 +11,19 @@
  */
 module.exports = function(grunt) {
 
-	grunt.config.set('uglify', {
-		dist: {
-			src: ['.tmp/public/concat/production.js'],
-			dest: '.tmp/public/min/production.min.js'
-		}
-	});
+  var users = require('../pipeline')
+    , uglify = {};
+
+  for (var key in users) {
+    var js = 'css'+key;
+
+    uglify[js] = {
+      src: ['.tmp/public/concat/' + key + '.js'],
+      dest: '.tmp/public/min/' + key + '.min.js'
+    }
+  };
+
+	grunt.config.set('uglify', uglify);
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 };
