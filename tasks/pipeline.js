@@ -11,10 +11,18 @@
 var users = {
   public: {
     css: [
-      'public/**/*.css'
+      'styles/public/**/*.css'
     ],
     js: [
-      'public/**/*.js'
+      'lib/angular/angular.js',
+      'lib/angular-route/angular-route.js',
+      'lib/angular-animate/angular-animate.js',
+      'lib/angular-material/angular-material.js',
+      'lib/angular-resource/angular-resource.js',
+      'ib/angular-touch/angular-touch.js',
+      'lib/hammer/*.min.js',
+      'lib/lodash.min.js',
+      'js/public/**/*.js'
     ],
     templates: [
       'public/**/*.html'
@@ -24,11 +32,11 @@ var users = {
 
 for (var key in users) {
   users[key].css = users[key].css.map(function (path) {
-    return '.tmp/public/styles/' + path;
+    return '.tmp/public/' + path;
   }); 
 
   users[key].js = users[key].js.map(function (path) {
-    return '.tmp/public/js/' + path;
+    return '.tmp/public/' + path;
   });
 
   users[key].templates = users[key].templates.map(function (path) {

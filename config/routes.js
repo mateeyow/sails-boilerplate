@@ -20,31 +20,22 @@
  * http://sailsjs.org/#/documentation/concepts/Routes/RouteTargetSyntax.html
  */
 
-module.exports.routes = {
+var indexSites = [
+  '/',
+  '/:link'
+];
 
-  /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
-
-  '/*': {
-    controller: 'SiteController',
-    action: 'index'
-  }
-
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  *  If a request to a URL doesn't match any of the custom routes above, it  *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+// Custom routes with corresponding controllers
+var routes = {
 
 };
+
+indexSites.forEach(function (url) {
+  routes[url] = {
+    controller  : 'SiteController',
+    action      : 'index',
+    skipAssets  : true
+  }
+});
+
+module.exports.routes = routes

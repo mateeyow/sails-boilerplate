@@ -115,19 +115,19 @@ module.exports = function(grunt) {
 		var jade = 'views/' + key + '.jade'
 		for (var link in linker) {
 			if (link.indexOf('prod') > -1) {
-				if (link.indexOf('Js') > -1) {
-					var dir = ['.tmp/public/min/' + key + '.min.js']
+				if (link.indexOf('Styles') > -1) {
+          var dir = ['.tmp/public/min/' + key + '.min.css']
 					linker[link].files[jade] = dir
 				} else {
-					var dir = ['.tmp/public/min/' + key + '.min.css']
+          var dir = ['.tmp/public/min/' + key + '.min.js']
 					linker[link].files[jade] = dir
 				}
 			} else {
-				if (link.indexOf('Js') > -1) {
-					var dir = users[key].js
+				if (link.indexOf('Styles') > -1) {
+          var dir = users[key].css
 					linker[link].files[jade] = dir
 				} else {
-					var dir = users[key].css
+          var dir = users[key].js
 					linker[link].files[jade] = dir
 				}
 			}
