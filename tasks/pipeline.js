@@ -11,16 +11,20 @@
 var users = {
   public: {
     css: [
+      'lib/angular-material/angular-material.min.css',
+      'lib/angular-material/default-theme.css',
       'styles/public/**/*.css'
     ],
     js: [
       'lib/angular/angular.js',
       'lib/angular-route/angular-route.js',
+      'lib/angular-aria/angular-aria.min.js',
+      'lib/angular-messages/angular-messages.min.js',
       'lib/angular-animate/angular-animate.js',
-      'lib/angular-material/angular-material.js',
       'lib/angular-resource/angular-resource.js',
-      'ib/angular-touch/angular-touch.js',
-      'lib/hammer/*.min.js',
+      'lib/angular-touch/angular-touch.js',
+      'lib/hammerjs/hammer.min.js',
+      'lib/angular-material/angular-material.js',
       'lib/lodash.min.js',
       'js/public/**/*.js'
     ],

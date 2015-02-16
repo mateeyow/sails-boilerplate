@@ -1,6 +1,9 @@
 angular.module('app', [
   'ngRoute'
   'ngResource'
+  'ngMaterial'
+  'ngMessages'
+  'ngAnimate'
 ])
 .config [
   '$routeProvider',
