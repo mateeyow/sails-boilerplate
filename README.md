@@ -1,3 +1,3 @@
 # sails-boilerplate
 
-a [Sails](http://sailsjs.org) application
+A boilerplate for sails with `angular-material`
